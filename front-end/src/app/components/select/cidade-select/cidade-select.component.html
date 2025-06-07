@@ -1,0 +1,4 @@
+<select [ngModel]="value" (ngModelChange)="setValue($event)">
+  <option [ngValue]="null">Selecione</option>
+  <option *ngFor="let c of cidades" [ngValue]="c.id">{{c.nome}} - {{c.uf}}</option>
+</select>

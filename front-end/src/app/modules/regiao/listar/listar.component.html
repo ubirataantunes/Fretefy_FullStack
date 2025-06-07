@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header">
+    <h2>Regiões</h2>
+    <div class="header-buttons">
+      <button class="btn btn-neutral" (click)="cadastrar()">+ Cadastrar</button>
+      <button class="btn btn-neutral" (click)="exportar()">Exportar</button>
+    </div>
+  </div>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th class="left-align">Nome da região</th>
+        <th>Situação</th>
+        <th>Ativar/Desativar</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let regiao of regioes">
+        <td class="left-align">{{ regiao.nome }}</td>
+        <td>{{ regiao.ativo ? 'Ativo' : 'Inativo' }}</td>
+        <td>
+          <button class="btn btn-neutral" (click)="regiao.ativo ? desativar(regiao) : ativar(regiao)">
+            {{ regiao.ativo ? 'Desativar' : 'Ativar' }}
+          </button>
+        </td>
+        <td>
+          <a class="btn btn-neutral" [routerLink]="['/', 'regiao', 'editar', regiao.id]">
+            Editar
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

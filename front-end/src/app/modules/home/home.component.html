@@ -1,3 +1,33 @@
-<p>
-  home works!
-</p>
+<div class="container">
+  <div class="header">
+    <h2>Cidades</h2>
+    <div class="header-buttons">
+      <button class="btn btn-neutral" (click)="cadastrar()">+ Cadastrar</button>
+      <button class="btn btn-neutral" (click)="atualizarLatitudeELongitude()">Atualizar latitude e Longitude</button>
+    </div>
+  </div>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th class="left-align">Nome da Cidade</th>
+        <th>Estado</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cidade of cidades" (mouseenter)="mostrarMiniMapa(cidade)" (mouseleave)="ocultarMiniMapa()">
+        <td class="left-align" style="position: relative;">{{ cidade.nome }}
+ <div class="map-tooltip" *ngIf="cidade === cidadeComMapaVisivel">
+      <div [id]="'mini-map-' + cidade.nome.replace('/\s+/g', '-')"></div>
+    </div>
+
+        </td>
+        <td>{{ cidade.uf }}</td>
+        <td>{{ cidade.latitude || ' - ' }}</td>
+        <td>{{ cidade.longitude || ' - ' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

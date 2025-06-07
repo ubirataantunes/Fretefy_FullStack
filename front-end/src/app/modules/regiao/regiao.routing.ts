@@ -1,11 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
-import { RegiaoComponent } from './regiao.component';
+import { CadastrarComponent } from './cadastrar/cadastrar.component';
+import { ListarComponent } from './listar/listar.component';
 
 const routes: Routes = [
-  { 
+  {
     path: '',
-    component: RegiaoComponent
+    component: ListarComponent
   },
+  { path: 'cadastrar', component: CadastrarComponent },
+  { path: 'editar/:id', component: CadastrarComponent },
 ];
 
-export const  RegiaoRoutingModule = RouterModule.forChild(routes);
+export const RegiaoRoutingModule = RouterModule.forChild(routes);

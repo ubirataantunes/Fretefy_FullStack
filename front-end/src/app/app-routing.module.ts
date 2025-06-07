@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'regiao',
     loadChildren: () => import('./modules/regiao/regiao.module').then(m => m.RegiaoModule)
   },
+    {
+    path: 'mapa',
+    loadChildren: () => import('./modules/mapa/mapa.module').then(m => m.MapaModule)
+  },
   { 
     path: '**', 
     redirectTo: '/home' 

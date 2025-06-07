@@ -1,0 +1,40 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>Cadastro de Região</h2>
+  </div>
+
+  <form [formGroup]="regiaoForm">
+    <div class="form-group">
+      <label for="nome">Nome da região *</label>
+      <input formControlName="nome" type="text" id="nome" placeholder="Digite o nome da região" />
+    </div>
+
+    <h3 class="section-title">Locais da região</h3>
+    <div id="cityList" formArrayName="cidades">
+      <div *ngFor="let cidade of cidades.controls; let i = index;" class="city-group" [formGroupName]="i">
+        <label for="cidade-{{i}}">Cidade</label>
+        <div class="cidade-row">
+          <app-cidade-select formControlName="id" id="cidade-{{i}}"></app-cidade-select>
+          <button
+            [disabled]="cidades.controls.length == 1"
+            type="button"
+            [ngClass]="{'btn-disabled': cidades.controls.length == 1}"
+            class="btn btn-neutral remove-btn"
+            (click)="removerCidade(i)"
+          >Remover</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="erroAoAddCidade" class="error-message">
+      {{ erroAoAddCidade }}
+    </div>
+
+    <button type="button" class="btn btn-neutral add-btn" (click)="addCidadeFormGroup()">➕ Adicionar Cidade</button>
+
+    <div class="form-footer">
+      <button type="button" class="btn btn-neutral" (click)="cancelar()">Cancelar</button>
+      <button type="button" class="btn btn-neutral" (click)="salvar()">Salvar</button>
+    </div>
+  </form>
+</div>
