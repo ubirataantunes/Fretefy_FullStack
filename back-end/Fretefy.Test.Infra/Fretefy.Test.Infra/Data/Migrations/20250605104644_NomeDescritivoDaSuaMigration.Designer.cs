@@ -3,14 +3,16 @@ using System;
 using Fretefy.Test.Infra.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Fretefy.Test.Infra.EntityFramework.Migrations
+namespace Fretefy.Test.Infra.Fretefy.Test.Infra.Data.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    partial class TestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605104644_NomeDescritivoDaSuaMigration")]
+    partial class NomeDescritivoDaSuaMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,12 +23,6 @@ namespace Fretefy.Test.Infra.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
-
-                    b.Property<double?>("Latitude")
-                        .HasColumnType("REAL");
-
-                    b.Property<double?>("Longitude")
-                        .HasColumnType("REAL");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -228,32 +224,32 @@ namespace Fretefy.Test.Infra.EntityFramework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
+                            Id = new Guid("f0f7d0d5-4b6f-4b08-93b2-e49a3f214735"),
                             Ativo = true,
                             Nome = "Norte"
                         },
                         new
                         {
-                            Id = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
+                            Id = new Guid("5d7df2c0-1f33-4bb0-8032-2a6d8f6dcbf9"),
                             Ativo = true,
                             Nome = "Nordeste"
                         },
                         new
                         {
-                            Id = new Guid("6d5e1f14-4bcf-4c67-8a8a-3f4e5c3c3333"),
+                            Id = new Guid("9e9c4b2f-9c74-438d-98b0-0220193925c1"),
                             Ativo = true,
                             Nome = "Centro-Oeste"
                         },
                         new
                         {
-                            Id = new Guid("7f8c9e62-7f4e-4b33-aaa1-4d6f8d4d4444"),
-                            Ativo = true,
+                            Id = new Guid("4e2736f3-017f-4c6b-81b8-9ba4ed1e37cd"),
+                            Ativo = false,
                             Nome = "Sudeste"
                         },
                         new
                         {
-                            Id = new Guid("5e1f8a99-9e3a-4aa1-bb2c-5f7e6e5e5555"),
-                            Ativo = true,
+                            Id = new Guid("b0c7d3f3-c1ab-4a2d-9338-c88cc51080c7"),
+                            Ativo = false,
                             Nome = "Sul"
                         });
                 });
@@ -275,138 +271,53 @@ namespace Fretefy.Test.Infra.EntityFramework.Migrations
                     b.HasData(
                         new
                         {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
+                            RegiaoId = new Guid("f0f7d0d5-4b6f-4b08-93b2-e49a3f214735"),
                             CidadeId = new Guid("8e9db7f0-e40a-4e68-9b9a-e7efc3ad60c4")
                         },
                         new
                         {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("5f402477-3a90-421f-8cde-6d982f1c872d")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("83db2c9e-d62a-48ad-b07f-11f89d504951")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("17e01bc5-9f73-4531-9074-eefb7b8d458d")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("340ebc11-fc7c-49b2-9b4c-00b6f89c9990")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("805855e0-86d6-4f79-bc4e-c3c71b3d827a")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("9a2f8e35-32d2-4a58-bd98-1d8d9a1a1111"),
-                            CidadeId = new Guid("7c11f1d4-34bc-4260-a109-b1d7ac1bc129")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
+                            RegiaoId = new Guid("f0f7d0d5-4b6f-4b08-93b2-e49a3f214735"),
                             CidadeId = new Guid("1c846b6d-d207-48b3-b70d-e7ac2bc9f101")
                         },
                         new
                         {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
+                            RegiaoId = new Guid("f0f7d0d5-4b6f-4b08-93b2-e49a3f214735"),
+                            CidadeId = new Guid("5f402477-3a90-421f-8cde-6d982f1c872d")
+                        },
+                        new
+                        {
+                            RegiaoId = new Guid("f0f7d0d5-4b6f-4b08-93b2-e49a3f214735"),
                             CidadeId = new Guid("0c97466d-51b3-4097-93f9-41b7fbc5f8a3")
                         },
                         new
                         {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("b51a6b2d-4123-4632-b2c5-87f57d7480db")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("b4abf477-e221-4017-9b62-caa52b24dfb4")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("6a2b041f-f924-468d-8635-63c62358d435")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("1ccbd6ae-0e58-4f91-bb02-dad31c8201b1")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("332ce25e-47f1-44d9-99d5-1ae913b0ac88")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("4d545f9e-1ff4-471a-bbfe-7be8e5b522bc")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("3c7c2b0e-1b3f-4e3a-80dd-2d0f7b2a2222"),
-                            CidadeId = new Guid("d72b501a-34f5-47b2-9a5f-b21b3a3daaa5")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("6d5e1f14-4bcf-4c67-8a8a-3f4e5c3c3333"),
-                            CidadeId = new Guid("09db72f5-ef75-4785-bf59-b5103063acdd")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("6d5e1f14-4bcf-4c67-8a8a-3f4e5c3c3333"),
-                            CidadeId = new Guid("8db0d3f9-121b-4f63-8d84-27a2a8dfdfdd")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("6d5e1f14-4bcf-4c67-8a8a-3f4e5c3c3333"),
-                            CidadeId = new Guid("72a2cb2d-fc50-48e4-a6e9-8599082d2b85")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("6d5e1f14-4bcf-4c67-8a8a-3f4e5c3c3333"),
-                            CidadeId = new Guid("51b78b97-fb88-4661-bd68-df20c02ae283")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("7f8c9e62-7f4e-4b33-aaa1-4d6f8d4d4444"),
-                            CidadeId = new Guid("3fbe0e9c-4cc9-4643-9ff1-bc57a9bcb762")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("7f8c9e62-7f4e-4b33-aaa1-4d6f8d4d4444"),
-                            CidadeId = new Guid("42c606b9-2958-4961-a3a6-92ccfc3b7078")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("7f8c9e62-7f4e-4b33-aaa1-4d6f8d4d4444"),
+                            RegiaoId = new Guid("4e2736f3-017f-4c6b-81b8-9ba4ed1e37cd"),
                             CidadeId = new Guid("dd99bc63-4772-4ec0-a9b2-4c345f4d7de5")
                         },
                         new
                         {
-                            RegiaoId = new Guid("7f8c9e62-7f4e-4b33-aaa1-4d6f8d4d4444"),
-                            CidadeId = new Guid("af1c7b8e-d3d8-4d58-b8b6-18fdaab71a92")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("5e1f8a99-9e3a-4aa1-bb2c-5f7e6e5e5555"),
-                            CidadeId = new Guid("b07bb4e0-6a90-4f2f-86d7-80b198582dc0")
-                        },
-                        new
-                        {
-                            RegiaoId = new Guid("5e1f8a99-9e3a-4aa1-bb2c-5f7e6e5e5555"),
+                            RegiaoId = new Guid("4e2736f3-017f-4c6b-81b8-9ba4ed1e37cd"),
                             CidadeId = new Guid("f8f3adf6-2c5e-4f2e-9b7e-9fa745672d85")
                         },
                         new
                         {
-                            RegiaoId = new Guid("5e1f8a99-9e3a-4aa1-bb2c-5f7e6e5e5555"),
-                            CidadeId = new Guid("2eecb465-7f31-4592-81f3-8a5b8fa5b254")
+                            RegiaoId = new Guid("4e2736f3-017f-4c6b-81b8-9ba4ed1e37cd"),
+                            CidadeId = new Guid("805855e0-86d6-4f79-bc4e-c3c71b3d827a")
+                        },
+                        new
+                        {
+                            RegiaoId = new Guid("5d7df2c0-1f33-4bb0-8032-2a6d8f6dcbf9"),
+                            CidadeId = new Guid("1ccbd6ae-0e58-4f91-bb02-dad31c8201b1")
+                        },
+                        new
+                        {
+                            RegiaoId = new Guid("9e9c4b2f-9c74-438d-98b0-0220193925c1"),
+                            CidadeId = new Guid("dd99bc63-4772-4ec0-a9b2-4c345f4d7de5")
+                        },
+                        new
+                        {
+                            RegiaoId = new Guid("b0c7d3f3-c1ab-4a2d-9338-c88cc51080c7"),
+                            CidadeId = new Guid("af1c7b8e-d3d8-4d58-b8b6-18fdaab71a92")
                         });
                 });
 

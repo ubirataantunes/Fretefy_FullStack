@@ -9,10 +9,12 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
     public class CidadeRepository : ICidadeRepository
     {
         private DbSet<Cidade> _dbSet;
+        private DbContext _context;
 
         public CidadeRepository(DbContext dbContext)
         {
             _dbSet = dbContext.Set<Cidade>();
+            _context = dbContext;
         }
 
         public IQueryable<Cidade> List()
@@ -27,8 +29,21 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
 
         public IEnumerable<Cidade> Query(string terms)
         {
-
             return _dbSet.Where(w => EF.Functions.Like(w.Nome, $"%{terms}%") || EF.Functions.Like(w.UF, $"%{terms}%"));
+        }
+
+        public Cidade Add(Cidade cidade)
+        {
+            _dbSet.Add(cidade);
+            _context.SaveChanges();
+            return cidade;
+        }
+
+        public Cidade Update(Cidade cidade)
+        {
+            _dbSet.Update(cidade);
+            _context.SaveChanges();
+            return cidade;
         }
     }
 }

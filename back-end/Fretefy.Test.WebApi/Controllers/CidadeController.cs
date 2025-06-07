@@ -38,5 +38,27 @@ namespace Fretefy.Test.WebApi.Controllers
             var cidades = _cidadeService.Get(id);
             return Ok(cidades);
         }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Cidade cidade)
+        {
+            var createdCidade = _cidadeService.Create(cidade);
+
+            return CreatedAtAction(nameof(Get), new { id = createdCidade.Id }, createdCidade);
+        }
+
+        [HttpGet("AtualizarLatitudeELongitudePorId/{id}")]
+        public IActionResult UpdateLatitudeLongitude([FromQuery] string id)
+        {
+            var cidades = _cidadeService.UpdateLatitudeAndLongitudeById(Guid.Parse(id));
+            return Ok(cidades);
+        }
+
+        [HttpGet("AtualizarLatitudeELongitude")]
+        public IActionResult UpdateLatitudeLongitude()
+        {
+            var cidades = _cidadeService.UpdateLatitudeAndLongitude();
+            return Ok(cidades);
+        }
     }
 }

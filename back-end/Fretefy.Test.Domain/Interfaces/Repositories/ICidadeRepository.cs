@@ -9,5 +9,7 @@ namespace Fretefy.Test.Domain.Interfaces.Repositories
         IQueryable<Cidade> List();
         IEnumerable<Cidade> ListByUf(string uf);
         IEnumerable<Cidade> Query(string terms);
+        Cidade Add(Cidade cidade);
+        Cidade Update(Cidade cidade);
     }
 }
