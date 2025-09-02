@@ -1,7 +1,7 @@
 ﻿
 namespace Fretefy.Test.Domain.Entities.DTO
 {
-    public class ExportDTO
+    public class RegiaoExportDTO
     {
         public string Regiao { get; set; }
         public bool Ativo { get; set; }

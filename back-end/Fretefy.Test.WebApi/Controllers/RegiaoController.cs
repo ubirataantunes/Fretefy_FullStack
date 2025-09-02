@@ -1,6 +1,7 @@
 ﻿using Fretefy.Test.Domain.Entities;
 using Fretefy.Test.Domain.Entities.DTO;
 using Fretefy.Test.Domain.Interfaces;
+using Fretefy.Test.Domain.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,77 +24,144 @@ namespace Fretefy.Test.WebApi.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            IEnumerable<RegiaoCidadeDTO> regioes = _regiaoService.List();
+            try
+            {
+                IEnumerable<RegiaoCidadeDTO> regioes = _regiaoService.List();
 
-            return Ok(regioes);
+                if (regioes == null)
+                    return NotFound();
+
+                return Ok(regioes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao listar regiões: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult ListById(Guid id)
         {
-            RegiaoCidadeDTO regiao = _regiaoService.ListById(id);
+            if (id == Guid.Empty)
+                return BadRequest("ID inválido.");
 
-            return Ok(regiao);
+            try
+            {
+                RegiaoCidadeDTO regiao = _regiaoService.ListById(id);
+
+                if(regiao == null)
+                    return NotFound();
+
+                return Ok(regiao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao listar região: {ex.Message}");
+            }
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] Regiao regiao)
         {
-            var createdRegiao = _regiaoService.Create(regiao);
-            return Ok(createdRegiao);
+            try
+            {
+                var createdRegiao = _regiaoService.Create(regiao);
+                return Ok(createdRegiao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao criar região: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, [FromBody] RegiaoCidadeDTO regiao)
+        public IActionResult Update(Guid id, [FromBody] RegiaoUpdateDTO regiao)
         {
-            var updatedRegiao = _regiaoService.Update(regiao);
-            if (updatedRegiao == null)
-                return NotFound();
+            if (id != regiao.Id)
+                return BadRequest("ID da URL diferente do ID do corpo da requisição.");
 
-            return Ok(updatedRegiao);
+            try
+            {
+                var updatedRegiao = _regiaoService.Update(regiao);
+                if (updatedRegiao == null)
+                    return NotFound();
+
+                return Ok(updatedRegiao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao atualizar região: {ex.Message}");
+            }
         }
 
         [HttpPut("SetActive/{id}")]
         public IActionResult SetActive(Guid id)
         {
-            _regiaoService.SetActive(id);
+            if (id == Guid.Empty)
+                return BadRequest("ID inválido.");
 
-            return Ok(true);
+            try
+            {
+                _regiaoService.SetActive(id);
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao ativar região: {ex.Message}");
+            }
         }
 
         [HttpPut("TurnOff/{id}")]
         public IActionResult TurnOff(Guid id)
         {
-            _regiaoService.TurnOff(id);
+            if (id == Guid.Empty)
+                return BadRequest("ID inválido.");
 
-            return Ok(true);
+            try
+            {
+                _regiaoService.TurnOff(id);
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao desativar região: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _regiaoService.Delete(id);
-            return NoContent();
+            if (id == Guid.Empty)
+                return BadRequest("ID inválido.");
+
+            try
+            {
+                _regiaoService.Delete(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao deletar região: {ex.Message}");
+            }
         }
 
         [HttpGet("Export")]
         public async Task<IActionResult> Export()
         {
-            var regioes = _regiaoService.Export();
-
-            using var memoryStream = new MemoryStream();
-            using (var streamWriter = new StreamWriter(memoryStream))
+            try
             {
-                await streamWriter.WriteLineAsync($"Regiao, Status, UF, Cidade");
-                foreach (var p in regioes)
-                {
-                    await streamWriter.WriteLineAsync($"{p.Regiao}, {p.Ativo}, {p.UF}, {p.Cidade}");
-                    await streamWriter.FlushAsync();
-                }
-                await streamWriter.FlushAsync();
-            }
+                var regioes = _regiaoService.Export();
 
-            return Ok(File(memoryStream.ToArray(), "text/csv", $"RegioesCidades.csv"));
+                var file = ExcelExporter.ExportarRegioes(regioes);
+
+                return Ok(File(file, "text/csv", $"RegioesCidades.csv"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao exportar: {ex.Message}");
+            }
         }
     }
 }

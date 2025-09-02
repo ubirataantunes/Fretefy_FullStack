@@ -76,39 +76,63 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   mostrarMiniMapa(cidade: Cidade): void {
+    this.limparMiniMapa();
+
     this.cidadeComMapaVisivel = cidade;
 
     setTimeout(() => {
-      const mapId = 'mini-map-' + cidade.nome.replace(/\s+/g, '-');
-      const container = document.getElementById(mapId);
-
-      if (container) {
-        this.miniMap = L.map(container, {
-          attributionControl: false,
-          zoomControl: true,
-          dragging: false,
-          scrollWheelZoom: false,
-          doubleClickZoom: false,
-          boxZoom: false,
-          keyboard: false,
-          tap: false,
-        }).setView([cidade.latitude!, cidade.longitude!], 10);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '',
-        }).addTo(this.miniMap);
-
-        L.marker([cidade.latitude!, cidade.longitude!]).addTo(this.miniMap);
-      }
-    }, 50);
+      this.inicializarMapa(cidade);
+    }, 0);
   }
 
   ocultarMiniMapa(): void {
+    this.limparMiniMapa();
     this.cidadeComMapaVisivel = null;
+  }
+
+  ngOnDestroy(): void {
+    this.limparMiniMapa();
+  }
+
+  public getMapId(cidade: Cidade): string {
+    if (!cidade || !cidade.nome) {
+      return '';
+    }
+    return 'mini-map-' + cidade.nome.replace(/\s+/g, '-');
+  }
+
+  private inicializarMapa(cidade: Cidade): void {
+    const mapId = this.getMapId(cidade);
+    const container = document.getElementById(mapId);
+
+    if (container) {
+      this.miniMap = L.map(container, {
+        zoomControl: true,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        tap: false,
+        attributionControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+      }).setView([cidade.latitude!, cidade.longitude!], 10);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(
+        this.miniMap
+      );
+      L.marker([cidade.latitude!, cidade.longitude!]).addTo(this.miniMap);
+
+      setTimeout(() => {
+        this.miniMap?.invalidateSize();
+      }, 10);
+    }
+  }
+
+  private limparMiniMapa(): void {
     if (this.miniMap) {
       this.miniMap.remove();
+      this.miniMap = null;
     }
   }
 }

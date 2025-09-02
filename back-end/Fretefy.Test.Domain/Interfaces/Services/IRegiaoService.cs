@@ -10,10 +10,10 @@ namespace Fretefy.Test.Domain.Interfaces
         IEnumerable<RegiaoCidadeDTO> List();
         public RegiaoCidadeDTO ListById(Guid regiaoId);
         Regiao Create(Regiao regiao);
-        Regiao Update(RegiaoCidadeDTO regiao);
+        Regiao Update(RegiaoUpdateDTO regiao);
         void SetActive(Guid id);
         void TurnOff(Guid id);
         void Delete(Guid id);
-        IEnumerable<ExportDTO> Export();
+        IEnumerable<RegiaoExportDTO> Export();
     }
 }

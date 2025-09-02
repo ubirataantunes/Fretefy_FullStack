@@ -32,18 +32,33 @@ namespace Fretefy.Test.Services
         {
             return _regiaoRepository.Add(regiao);
         }
-        public Regiao Update(RegiaoCidadeDTO regiaoCidadeDto)
+
+        public Regiao Update(RegiaoUpdateDTO dto)
         {
-            return _regiaoRepository.Update(regiaoCidadeDto);
+            var regiao = _regiaoRepository.GetWithCities(dto.Id);
+            if (regiao == null)
+                throw new KeyNotFoundException("Região não encontrada.");
+
+            regiao.Update(dto.Nome, dto.Cidades, dto.Ativo);
+
+            return _regiaoRepository.Update(regiao);
         }
 
         public void SetActive(Guid id)
         {
-            _regiaoRepository.SetActive(id);
+            var regiao = _regiaoRepository.GetById(id);
+
+            regiao.SetActive();
+
+            _regiaoRepository.Update(regiao);
         }
         public void TurnOff(Guid id)
         {
-            _regiaoRepository.TurnOff(id);
+            var regiao = _regiaoRepository.GetById(id);
+
+            regiao.TurnOff();
+
+            _regiaoRepository.Update(regiao);
         }
 
         public void Delete(Guid id)
@@ -51,7 +66,7 @@ namespace Fretefy.Test.Services
             _regiaoRepository.Delete(id);
         }
 
-        public IEnumerable<ExportDTO> Export()
+        public IEnumerable<RegiaoExportDTO> Export()
         {
             return _regiaoRepository.Export();
         }

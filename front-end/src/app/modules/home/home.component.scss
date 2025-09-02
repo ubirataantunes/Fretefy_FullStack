@@ -80,3 +80,10 @@
   height: 100%;
 }
 
+.table-row {
+  cursor: pointer;
+}
+
+.table-row:hover {
+  background-color: #949899;
+}

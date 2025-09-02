@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Regiao } from '../models/regiao';
+import { AtualizarRegiao } from '../models/atualizarRegiao';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class RegiaoService {
     return this.http.post<boolean>(this.apiUrl, regiao)
   }
 
-  atualizar(regiao: Regiao): Observable<boolean> {
+  atualizar(regiao: AtualizarRegiao): Observable<boolean> {
     return this.http.put<boolean>(`${this.apiUrl}/${regiao.id}`, regiao)
   }
 

@@ -64,6 +64,11 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
                 .FirstOrDefault();
         }
 
+        public Regiao GetWithCities(Guid id)
+        {
+            return _dbSet.Include(r => r.RegiaoCidades).FirstOrDefault(r => r.Id == id);
+        }
+
         public Regiao GetById(Guid id)
         {
             return _dbSet.FirstOrDefault(r => r.Id == id);
@@ -80,59 +85,11 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
             return regiao;
         }
 
-        public Regiao Update(RegiaoCidadeDTO regiaoAtualizada)
+        public Regiao Update(Regiao regiao)
         {
-            var regiao = _dbSet
-                .Include(r => r.RegiaoCidades)
-                .FirstOrDefault(r => r.Id == regiaoAtualizada.Id);
-
-            regiao.Nome = regiaoAtualizada.Nome;
-
-            var novasCidadeIds = regiaoAtualizada.Cidades.Select(c => c.Id).ToList();
-
-            var relacionamentosParaRemover = regiao.RegiaoCidades
-                .Where(rc => !novasCidadeIds.Contains(rc.CidadeId))
-                .ToList();
-
-            foreach (var rc in relacionamentosParaRemover)
-            {
-                regiao.RegiaoCidades.Remove(rc);
-            }
-
-            foreach (var cidadeId in novasCidadeIds)
-            {
-                if (!regiao.RegiaoCidades.Any(rc => rc.CidadeId == cidadeId))
-                {
-                    regiao.RegiaoCidades.Add(new RegiaoCidade
-                    {
-                        RegiaoId = regiao.Id,
-                        CidadeId = cidadeId
-                    });
-                }
-            }
-
+             _dbSet.Update(regiao); 
             _dbContext.SaveChanges();
-
             return regiao;
-        }
-
-        public void SetActive(Guid id)
-        {
-            var regiao = _dbSet.Find(id);
-
-            regiao.SetActive();
-
-            _dbSet.Update(regiao);
-            _dbContext.SaveChanges();
-        }
-        public void TurnOff(Guid id)
-        {
-            var regiao = _dbSet.Find(id);
-
-            regiao.TurnOff();
-
-            _dbSet.Update(regiao);
-            _dbContext.SaveChanges();
         }
 
         public void Delete(Guid id)
@@ -145,15 +102,13 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
             _dbContext.SaveChanges();
         }
 
-
-
-        public IEnumerable<ExportDTO> Export()
+        public IEnumerable<RegiaoExportDTO> Export()
         {
             return _dbSet
                     .Include(r => r.RegiaoCidades)
                     .ThenInclude(rc => rc.Cidade)
                     .AsEnumerable()
-                    .SelectMany(r => r.RegiaoCidades.Select(rc => new ExportDTO
+                    .SelectMany(r => r.RegiaoCidades.Select(rc => new RegiaoExportDTO
                     {
                         Regiao = r.Nome,
                         Ativo = r.Ativo,

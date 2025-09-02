@@ -3,7 +3,9 @@
     <h2>Cidades</h2>
     <div class="header-buttons">
       <button class="btn btn-neutral" (click)="cadastrar()">+ Cadastrar</button>
-      <button class="btn btn-neutral" (click)="atualizarLatitudeELongitude()">Atualizar latitude e Longitude</button>
+      <button class="btn btn-neutral" (click)="atualizarLatitudeELongitude()">
+        Atualizar latitude e Longitude
+      </button>
     </div>
   </div>
 
@@ -17,16 +19,21 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cidade of cidades" (mouseenter)="mostrarMiniMapa(cidade)" (mouseleave)="ocultarMiniMapa()">
-        <td class="left-align" style="position: relative;">{{ cidade.nome }}
- <div class="map-tooltip" *ngIf="cidade === cidadeComMapaVisivel">
-      <div [id]="'mini-map-' + cidade.nome.replace('/\s+/g', '-')"></div>
-    </div>
-
+      <tr
+        *ngFor="let cidade of cidades"
+        (click)="mostrarMiniMapa(cidade)"
+        (mouseleave)="ocultarMiniMapa()"
+        class="table-row"
+      >
+        <td class="left-align" style="position: relative">
+          {{ cidade.nome }}
+          <div class="map-tooltip" *ngIf="cidade === cidadeComMapaVisivel">
+            <div [id]="getMapId(cidade)"></div>
+          </div>
         </td>
         <td>{{ cidade.uf }}</td>
-        <td>{{ cidade.latitude || ' - ' }}</td>
-        <td>{{ cidade.longitude || ' - ' }}</td>
+        <td>{{ cidade.latitude || " - " }}</td>
+        <td>{{ cidade.longitude || " - " }}</td>
       </tr>
     </tbody>
   </table>

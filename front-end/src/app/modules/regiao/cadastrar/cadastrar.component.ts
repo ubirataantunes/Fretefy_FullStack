@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AtualizarRegiao } from 'src/app/models/atualizarRegiao';
 import { Cidade } from 'src/app/models/cidade';
 import { Regiao } from 'src/app/models/regiao';
 import { RegiaoService } from 'src/app/services/regiao.service';
@@ -115,11 +116,11 @@ export class CadastrarComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    var regiaoModel = new Regiao();
-    regiaoModel.nome = this.regiaoForm.get('nome').value;
-    regiaoModel.cidades = this.cidades.controls.map((p) => p.value);
-
     if (!this.paramId) {
+      var regiaoModel = new Regiao();
+      regiaoModel.nome = this.regiaoForm.get('nome').value;
+      regiaoModel.cidades = this.cidades.controls.map((p) => p.value);
+
       this.regiaoService.salvar(regiaoModel).subscribe(
         () => {
           Swal.fire({
@@ -145,8 +146,13 @@ export class CadastrarComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
-      regiaoModel.id = this.paramId;
-      this.regiaoService.atualizar(regiaoModel).subscribe(
+      var regiaoModelUpdate = new AtualizarRegiao();
+      regiaoModelUpdate.id = this.paramId;
+      regiaoModelUpdate.nome = this.regiaoForm.get('nome').value;
+      regiaoModelUpdate.cidades = this.cidades.controls.map((p) => p.value.id);
+      regiaoModelUpdate.ativo = true;
+      
+      this.regiaoService.atualizar(regiaoModelUpdate).subscribe(
         () => {
           Swal.fire({
             icon: 'success',
