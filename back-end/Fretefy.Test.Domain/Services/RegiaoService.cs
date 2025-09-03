@@ -28,8 +28,10 @@ namespace Fretefy.Test.Services
             return _regiaoRepository.ListById(regiaoId);
         }
 
-        public Regiao Create(Regiao regiao)
+        public Regiao Create(RegiaoCreate dto)
         {
+            var regiao = new Regiao(dto.Nome, dto.Cidades);
+
             return _regiaoRepository.Add(regiao);
         }
 
@@ -63,7 +65,9 @@ namespace Fretefy.Test.Services
 
         public void Delete(Guid id)
         {
-            _regiaoRepository.Delete(id);
+            var regiao = _regiaoRepository.GetWithCities(id);
+
+            _regiaoRepository.Delete(regiao);
         }
 
         public IEnumerable<RegiaoExportDTO> Export()

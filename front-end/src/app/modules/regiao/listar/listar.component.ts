@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class ListarComponent implements OnInit {
   regioes: any[] = [];
 
-  constructor(private regiaoService: RegiaoService, private router: Router) {}
+  constructor(private regiaoService: RegiaoService, private router: Router) { }
 
   ngOnInit(): void {
     this.listar();
@@ -74,6 +74,45 @@ export class ListarComponent implements OnInit {
 
   editar(id: string) {
     this.router.navigate([`/regiao/editar/${id}`]);
+  }
+
+  async excluir(id: string): Promise<void> {
+    const result = await Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Esta ação não poderá ser revertida!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#bd3939ff',
+      cancelButtonColor: '#949899',
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    this.regiaoService.deletar(id).subscribe(() => {
+
+      this.regioes = this.regioes.filter((regiao) => regiao.id !== id);
+
+      Swal.fire({
+        title: 'Excluído!',
+        text: 'A região foi excluída com sucesso.',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+      });
+
+    }, (error) => {
+      console.error('Erro ao excluir a região:', error);
+
+      Swal.fire({
+        title: 'Erro!',
+        text: 'Não foi possível excluir a região. Tente novamente.',
+        icon: 'error',
+        confirmButtonColor: '#d33',
+      });
+    });
   }
 
   exportar() {

@@ -4,14 +4,6 @@ import { CidadeService } from 'src/app/services/cidade.service';
 import Swal from 'sweetalert2';
 import * as L from 'leaflet';
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'assets/images/marker-icon-2x.png',
-  iconUrl: 'assets/images/marker-icon.png',
-  shadowUrl: 'assets/images/marker-shadow.png',
-});
-
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.component.html',

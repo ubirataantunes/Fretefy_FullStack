@@ -14,6 +14,7 @@
         <th>Situação</th>
         <th>Ativar/Desativar</th>
         <th>Editar</th>
+        <th>Excluir</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,11 @@
           <a class="btn btn-neutral" [routerLink]="['/', 'regiao', 'editar', regiao.id]">
             Editar
           </a>
+        </td>
+        <td>
+          <button class="btn btn-neutral" (click)="excluir(regiao.id)">
+            Excluir
+          </button>
         </td>
       </tr>
     </tbody>

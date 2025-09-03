@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Regiao } from '../models/regiao';
 import { AtualizarRegiao } from '../models/atualizarRegiao';
+import { CriarRegiao } from '../models/criarRegiao';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,16 @@ export class RegiaoService {
     return this.http.get<Regiao>(`${this.apiUrl}/${id}`)
   }
 
-  salvar(regiao: Regiao): Observable<boolean> {
+  salvar(regiao: CriarRegiao): Observable<boolean> {
     return this.http.post<boolean>(this.apiUrl, regiao)
   }
 
   atualizar(regiao: AtualizarRegiao): Observable<boolean> {
     return this.http.put<boolean>(`${this.apiUrl}/${regiao.id}`, regiao)
+  }
+
+  deletar(id: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 
   ativar(id: string): Observable<boolean> {

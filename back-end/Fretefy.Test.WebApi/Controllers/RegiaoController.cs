@@ -61,7 +61,7 @@ namespace Fretefy.Test.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Regiao regiao)
+        public IActionResult Create([FromBody] RegiaoCreate regiao)
         {
             try
             {

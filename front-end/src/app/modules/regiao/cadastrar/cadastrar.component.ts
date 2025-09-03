@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AtualizarRegiao } from 'src/app/models/atualizarRegiao';
 import { Cidade } from 'src/app/models/cidade';
-import { Regiao } from 'src/app/models/regiao';
+import { CriarRegiao } from 'src/app/models/criarRegiao';
 import { RegiaoService } from 'src/app/services/regiao.service';
 import Swal from 'sweetalert2';
 
@@ -117,9 +117,9 @@ export class CadastrarComponent implements OnInit, AfterViewInit {
     }
 
     if (!this.paramId) {
-      var regiaoModel = new Regiao();
-      regiaoModel.nome = this.regiaoForm.get('nome').value;
-      regiaoModel.cidades = this.cidades.controls.map((p) => p.value);
+      const nome = this.regiaoForm.get('nome').value;
+      const cidades = this.cidades.controls.map((p) => p.value.id);
+      const regiaoModel = new CriarRegiao(nome, cidades);
 
       this.regiaoService.salvar(regiaoModel).subscribe(
         () => {
@@ -146,11 +146,11 @@ export class CadastrarComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
-      var regiaoModelUpdate = new AtualizarRegiao();
-      regiaoModelUpdate.id = this.paramId;
-      regiaoModelUpdate.nome = this.regiaoForm.get('nome').value;
-      regiaoModelUpdate.cidades = this.cidades.controls.map((p) => p.value.id);
-      regiaoModelUpdate.ativo = true;
+      const id = this.paramId;
+      const nome = this.regiaoForm.get('nome').value;
+      const cidades = this.cidades.controls.map((p) => p.value.id);
+      const ativo = true;
+      const regiaoModelUpdate = new AtualizarRegiao(id, nome, ativo, cidades);
       
       this.regiaoService.atualizar(regiaoModelUpdate).subscribe(
         () => {
@@ -160,8 +160,8 @@ export class CadastrarComponent implements OnInit, AfterViewInit {
             text: 'Região atualizada com sucesso',
             confirmButtonText: 'OK',
             confirmButtonColor: '#333',
-          }).then((e) => {
-            if (e.dismiss) this.router.navigate(['/regiao/']);
+          }).then(() => {
+            this.router.navigate(['/regiao/']);
           });
         },
         (error) => {

@@ -14,7 +14,7 @@ namespace Fretefy.Test.Domain.Interfaces.Repositories
         Regiao GetWithCities(Guid id);
         Regiao Add(Regiao regiao);
         Regiao Update(Regiao regiao);
-        void Delete(Guid id);
+        void Delete(Regiao id);
         IEnumerable<RegiaoExportDTO> Export();
     }
 }

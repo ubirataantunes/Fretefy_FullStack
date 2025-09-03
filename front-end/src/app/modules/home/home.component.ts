@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit {
         attributionControl: false,
         dragging: false,
         scrollWheelZoom: false,
-      }).setView([cidade.latitude!, cidade.longitude!], 10);
+      }).setView([cidade.latitude!, cidade.longitude!], 4);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(
         this.miniMap

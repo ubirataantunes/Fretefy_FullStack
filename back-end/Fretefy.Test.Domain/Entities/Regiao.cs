@@ -32,7 +32,7 @@ namespace Fretefy.Test.Domain.Entities
         /// <summary>
         /// Método mantido apenas para demonstração da API
         /// </summary>
-        public Regiao(Guid id, string nome) 
+        public Regiao(Guid id, string nome)
         {
             Id = Guid.NewGuid();
             ChangeName(nome);
@@ -43,7 +43,11 @@ namespace Fretefy.Test.Domain.Entities
         {
             ChangeName(nome);
             SetCities(cidades);
-            Ativo = ativo;
+
+            if (ativo)
+                SetActive();
+            else
+                TurnOff();
         }
 
         private void ChangeName(string nome)
@@ -59,12 +63,11 @@ namespace Fretefy.Test.Domain.Entities
             if (cidadeIds == null || !cidadeIds.Any())
                 throw new ArgumentException("É necessário informar ao menos uma cidade.");
 
-            if (cidadeIds.Count() != cidadeIds.Distinct().Count())
-                throw new ArgumentException("Não é permitido repetir a mesma cidade.");
+            var distinctCidadeIds = cidadeIds.ToHashSet();
 
             _regiaoCidades.Clear();
 
-            foreach (var cidadeId in cidadeIds)
+            foreach (var cidadeId in distinctCidadeIds)
             {
                 _regiaoCidades.Add(new RegiaoCidade
                 {

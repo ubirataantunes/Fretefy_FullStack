@@ -76,12 +76,8 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
 
         public Regiao Add(Regiao regiao)
         {
-            regiao.Id = Guid.NewGuid();
-            regiao.SetActive();
-
             _dbSet.Add(regiao);
             _dbContext.SaveChanges();
-
             return regiao;
         }
 
@@ -92,12 +88,8 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
             return regiao;
         }
 
-        public void Delete(Guid id)
+        public void Delete(Regiao regiao)
         {
-            var regiao = _dbSet
-                .Include(r => r.RegiaoCidades)
-                .FirstOrDefault(r => r.Id == id);
-
             _dbSet.Remove(regiao);
             _dbContext.SaveChanges();
         }
